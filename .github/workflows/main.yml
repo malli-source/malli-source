@@ -8,7 +8,7 @@ on:
 
 jobs:
   call-reusable:
-    uses: ./java.tech/.github/workflows/template.yml@main
+    uses: malli-source/java-tech/.github/workflows/template.yml@main
     with:
       java-version: '17'
       maven-goals: 'clean install'
