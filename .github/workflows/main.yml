@@ -25,11 +25,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Debug event
-        run: |
-          echo "event.before=$GITHUB_EVENT_BEFORE"
-          echo "sha=$GITHUB_SHA"
-          git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
+      # - name: Debug event
+      #   run: |
+      #     echo "event.before=$GITHUB_EVENT_BEFORE"
+      #     echo "sha=$GITHUB_SHA"
+      #     git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
       - name: Filter paths
         id: filter
         uses: dorny/paths-filter@v2
