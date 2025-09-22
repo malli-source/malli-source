@@ -4,13 +4,47 @@ on:
   push:
     branches:
       - main
-    paths:
-      - 'project-a/**'
-      - 'project-b/**'
-      - 'project-c/**'
+  #   paths:
+  #     - 'project-a/**'
+  #     - 'project-b/**'
+  #     - 'project-c/**'
+  # pull_request:
+  #   paths:
+  #     - 'project-a/**'
+  #     - 'project-b/**'
+  #     - 'project-c/**'
 #  workflow_dispatch:
 jobs:
+  filter:
+    runs-on: ubuntu-latest
+    outputs:
+      project-a_changed: ${{ steps.filter.outputs.project-a }}
+      project-b_changed: ${{ steps.filter.outputs.project-b }}
+      project-c_changed: ${{ steps.filter.outputs.project-c }}
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Debug event
+        run: |
+          echo "event.before=$GITHUB_EVENT_BEFORE"
+          echo "sha=$GITHUB_SHA"
+          git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
+      - name: Filter paths
+        id: filter
+        uses: dorny/paths-filter@v2
+        with:
+          filters: |
+            project-a:
+              - 'project-a/**'
+            project-b:
+              - 'project-b/**'
+            project-c:
+              - 'project-c/**'
+
   build-project-a:
+    needs: filter
+    if: needs.filter.outputs.project-a_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -21,7 +55,9 @@ jobs:
       - name: Build project-a
         run: mvn -B clean package --file project-a/pom.xml
 
-  build-project-b:
+  build-project-b: 
+    needs: filter
+    if: needs.filter.outputs.project-b_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -33,6 +69,8 @@ jobs:
         run: mvn -B clean package --file project-b/pom.xml
 
   build-project-c:
+    needs: filter
+    if: needs.filter.outputs.project-c_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
