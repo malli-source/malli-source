@@ -2,8 +2,13 @@ name: Java CI
 
 on:
   push:
-    branches:
-      - main
+   # branches:
+   #   - main
+    paths:
+      - 'project-a/**'
+      - 'project-b/**'
+      - 'project-c/**'
+  pull_request:
     paths:
       - 'project-a/**'
       - 'project-b/**'
