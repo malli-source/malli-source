@@ -23,6 +23,13 @@ jobs:
       project-c_changed: ${{ steps.filter.outputs.project-c }}
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: Debug event
+        run: |
+          echo "event.before=$GITHUB_EVENT_BEFORE"
+          echo "sha=$GITHUB_SHA"
+          git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
       - name: Filter paths
         id: filter
         uses: dorny/paths-filter@v2
