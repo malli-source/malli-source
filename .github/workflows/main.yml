@@ -3,19 +3,18 @@ name: Java CI
 on:
   push:
     paths:
-      - './project-a/**'
-      - './project-b/**'
-      - './project-c/**'
+      - 'project-a/**'
+      - 'project-b/**'
+      - 'project-c/**'
   pull_request:
     paths:
-      - './project-a/**'
-      - './project-b/**'
-      - './project-c/**'
+      - 'project-a/**'
+      - 'project-b/**'
+      - 'project-c/**'
 
 jobs:
   build-project-a:
     runs-on: ubuntu-latest
-  #  if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-a/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -23,11 +22,10 @@ jobs:
         with:
           java-version: 17
       - name: Build project-a
-        run: mvn -B clean package --file ./project-a/pom.xml
+        run: mvn -B clean package --file project-a/pom.xml
 
   build-project-b:
     runs-on: ubuntu-latest
- #   if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-b/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -35,11 +33,10 @@ jobs:
         with:
           java-version: 17
       - name: Build project-b
-        run: mvn -B clean package --file ./project-b/pom.xml
+        run: mvn -B clean package --file project-b/pom.xml
 
   build-project-c:
     runs-on: ubuntu-latest
- #   if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-c/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -47,6 +44,6 @@ jobs:
         with:
           java-version: 17
       - name: Build project-c
-        run: mvn -B clean package --file ./project-c/pom.xml
+        run: mvn -B clean package --file project-c/pom.xml
 
 
