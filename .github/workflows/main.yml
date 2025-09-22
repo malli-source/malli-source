@@ -4,6 +4,10 @@ on:
   push:
     branches:
       - main
+    paths:
+      - 'project-a/**'
+      - 'project-b/**'
+      - 'project-c/**'
 #  workflow_dispatch:
 jobs:
   build-project-a:
