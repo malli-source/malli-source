@@ -2,12 +2,9 @@ name: Java CI
 
 on:
   push:
-    paths:
+    branches:
       - main
-  pull_request:
-    paths:
-      - main
-  workflow_dispatch:
+#  workflow_dispatch:
 jobs:
   build-project-a:
     runs-on: ubuntu-latest
