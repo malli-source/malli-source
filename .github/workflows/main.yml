@@ -15,7 +15,7 @@ on:
 jobs:
   build-project-a:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-a/')
+  #  if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-a/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -27,7 +27,7 @@ jobs:
 
   build-project-b:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-b/')
+ #   if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-b/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
@@ -39,7 +39,7 @@ jobs:
 
   build-project-c:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-c/')
+ #   if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-c/')
     steps:
       - uses: actions/checkout@v2
       - name: Set up JDK 17
