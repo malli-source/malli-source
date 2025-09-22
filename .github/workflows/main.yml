@@ -3,15 +3,10 @@ name: Java CI
 on:
   push:
     paths:
-      - 'project-a/**'
-      - 'project-b/**'
-      - 'project-c/**'
+      - main
   pull_request:
     paths:
-      - 'project-a/**'
-      - 'project-b/**'
-      - 'project-c/**'
-
+      - main
 jobs:
   build-project-a:
     runs-on: ubuntu-latest
