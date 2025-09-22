@@ -1,17 +1,52 @@
-name: Main Workflow
+name: Java CI
 
 on:
   push:
-    branches: [ main ]
+    paths:
+      - './project-a/**'
+      - './project-b/**'
+      - './project-c/**'
   pull_request:
-    branches: [ main ]
+    paths:
+      - './project-a/**'
+      - './project-b/**'
+      - './project-c/**'
 
 jobs:
-  call-reusable:
-    uses: malli-source/java-tech/.github/workflows/template.yml@main
-    with:
-      java-version: '17'
-      maven-goals: 'clean install'
-    secrets:
-      MAVEN_SECRET: ${{ secrets.MAVEN_SECRET }}
+  build-project-a:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-a/')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Build project-a
+        run: mvn -B clean package --file ./project-a/pom.xml
+
+  build-project-b:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-b/')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Build project-b
+        run: mvn -B clean package --file ./project-b/pom.xml
+
+  build-project-c:
+    runs-on: ubuntu-latest
+    if: github.event_name == 'push' && contains(github.event.head_commit.modified, './project-c/')
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up JDK 17
+        uses: actions/setup-java@v1
+        with:
+          java-version: 17
+      - name: Build project-c
+        run: mvn -B clean package --file ./project-c/pom.xml
+
 
