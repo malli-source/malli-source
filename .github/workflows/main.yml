@@ -34,7 +34,7 @@ jobs:
           SONAR_ORGANIZATION: malli-source
         with:
           args: >
-          -Dsonar.coverage.jacoco.xmlReportPaths=project-a/target/site/jacoco/jacoco.xml
+            -Dsonar.coverage.jacoco.xmlReportPaths=project-a/target/site/jacoco/jacoco.xml
   # filter:
   #   runs-on: ubuntu-latest
   #   outputs:
