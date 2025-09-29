@@ -15,36 +15,7 @@ on:
   #     - 'project-c/**'
 #  workflow_dispatch:
 jobs:
-  filter:
-    runs-on: ubuntu-latest
-    outputs:
-      project-a_changed: ${{ steps.filter.outputs.project-a }}
-      project-b_changed: ${{ steps.filter.outputs.project-b }}
-      project-c_changed: ${{ steps.filter.outputs.project-c }}
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      # - name: Debug event
-      #   run: |
-      #     echo "event.before=$GITHUB_EVENT_BEFORE"
-      #     echo "sha=$GITHUB_SHA"
-      #     git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
-      - name: Filter paths
-        id: filter
-        uses: dorny/paths-filter@v2
-        with:
-          filters: |
-            project-a:
-              - 'project-a/**'
-            project-b:
-              - 'project-b/**'
-            project-c:
-              - 'project-c/**'
-
   build-project-a:
-    needs: filter
-    if: needs.filter.outputs.project-a_changed == 'true'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -53,44 +24,83 @@ jobs:
         with:
           java-version: 17
       - name: Build project-a
-        if: steps.detect.outputs.changed == 'true'
         run: mvn -B clean package --file project-a/pom.xml
-      - name: Skip project-a build
-        if: steps.detect.outputs.changed != 'true'
-        run: echo "Skipping project-a build as no changes detected."
+  # filter:
+  #   runs-on: ubuntu-latest
+  #   outputs:
+  #     project-a_changed: ${{ steps.filter.outputs.project-a }}
+  #     project-b_changed: ${{ steps.filter.outputs.project-b }}
+  #     project-c_changed: ${{ steps.filter.outputs.project-c }}
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #       with:
+  #         fetch-depth: 0
+      # - name: Debug event
+      #   run: |
+      #     echo "event.before=$GITHUB_EVENT_BEFORE"
+      #     echo "sha=$GITHUB_SHA"
+      #     git diff --name-only $GITHUB_EVENT_BEFORE $GITHUB_SHA
+  #     - name: Filter paths
+  #       id: filter
+  #       uses: dorny/paths-filter@v2
+  #       with:
+  #         filters: |
+  #           project-a:
+  #             - 'project-a/**'
+  #           project-b:
+  #             - 'project-b/**'
+  #           project-c:
+  #             - 'project-c/**'
 
-  build-project-b: 
-    needs: filter
-    if: needs.filter.outputs.project-b_changed == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-      - name: Build project-b
-        if: steps.detect.outputs.changed == 'true'
-        run: mvn -B clean package --file project-b/pom.xml
-      - name: Skip project-b build
-        if: steps.detect.outputs.changed != 'true'
-        run: echo "Skipping project-a build as no changes detected."
+  # build-project-a:
+  #   needs: filter
+  #   if: needs.filter.outputs.project-a_changed == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v1
+  #       with:
+  #         java-version: 17
+  #     - name: Build project-a
+  #       if: steps.detect.outputs.changed == 'true'
+  #       run: mvn -B clean package --file project-a/pom.xml
+  #     - name: Skip project-a build
+  #       if: steps.detect.outputs.changed != 'true'
+  #       run: echo "Skipping project-a build as no changes detected."
 
-  build-project-c:
-    needs: filter
-    if: needs.filter.outputs.project-c_changed == 'true'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Set up JDK 17
-        uses: actions/setup-java@v1
-        with:
-          java-version: 17
-      - name: Build project-c
-        if: steps.detect.outputs.changed == 'true'
-        run: mvn -B clean package --file project-c/pom.xml
-      - name: Skip project-c build
-        if: steps.detect.outputs.changed != 'true'
-        run: echo "Skipping project-a build as no changes detected."
+  # build-project-b: 
+  #   needs: filter
+  #   if: needs.filter.outputs.project-b_changed == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v1
+  #       with:
+  #         java-version: 17
+  #     - name: Build project-b
+  #       if: steps.detect.outputs.changed == 'true'
+  #       run: mvn -B clean package --file project-b/pom.xml
+  #     - name: Skip project-b build
+  #       if: steps.detect.outputs.changed != 'true'
+  #       run: echo "Skipping project-a build as no changes detected."
+
+  # build-project-c:
+  #   needs: filter
+  #   if: needs.filter.outputs.project-c_changed == 'true'
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v1
+  #       with:
+  #         java-version: 17
+  #     - name: Build project-c
+  #       if: steps.detect.outputs.changed == 'true'
+  #       run: mvn -B clean package --file project-c/pom.xml
+  #     - name: Skip project-c build
+  #       if: steps.detect.outputs.changed != 'true'
+  #       run: echo "Skipping project-a build as no changes detected."
 
 
