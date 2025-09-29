@@ -25,6 +25,12 @@ jobs:
           java-version: 17
       - name: Build project-a
         run: mvn -B clean package --file project-a/pom.xml
+
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   # filter:
   #   runs-on: ubuntu-latest
   #   outputs:
