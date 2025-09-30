@@ -40,6 +40,8 @@ jobs:
 
       - name: Confirm SonarScanner Version
         run: sonar-scanner -v
+      - name: run sonar
+        run: ./sonar.sh 
 
       # - name: Run SonarQube Version script
       #   run: ./sonar.sh --version
