@@ -40,7 +40,8 @@ jobs:
 
       - name: Confirm SonarScanner Version
         run: sonar-scanner -v
-      - name: run sonar
+      - name: Start SonarQube server
+        working-directory: ${{ github.workspace }}/sonarqube-9.9.8.100196/bin/linux-x86-64
         run: ./sonar.sh 
 
       # - name: Run SonarQube Version script
