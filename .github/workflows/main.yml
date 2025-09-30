@@ -46,11 +46,11 @@ jobs:
         working-directory: ${{ github.workspace }}/sonarqube-9.9.8.100196/bin/linux-x86-64
         run: ./sonar.sh start
       
-      - name: Run SonarScanner analysis
-        run: sonar-scanner
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          SONAR_HOST_URL: http://localhost:9000
+      # - name: Run SonarScanner analysis
+      #   run: sonar-scanner
+      #   env:
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #     SONAR_HOST_URL: http://localhost:9000
 
       # - name: Run SonarQube Version script
       #   run: ./sonar.sh --version
@@ -63,15 +63,15 @@ jobs:
       # - name: Build project-a
       #   run: mvn -B clean package --file project-a/pom.xml
 
-      # - name: SonarCloud Scan
-      #   uses: SonarSource/sonarqube-scan-action@v5.0.0
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #     SONAR_ORGANIZATION: malli-source
-      #   with:
-      #     args: >
-      #       -Dsonar.coverage.jacoco.xmlReportPaths=project-a/target/site/jacoco/jacoco.xml
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarqube-scan-action@v5.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_ORGANIZATION: malli-source
+        with:
+          args: >
+            -Dsonar.coverage.jacoco.xmlReportPaths=project-a/target/site/jacoco/jacoco.xml
   # filter:
   #   runs-on: ubuntu-latest
   #   outputs:
