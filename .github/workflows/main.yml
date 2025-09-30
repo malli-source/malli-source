@@ -24,7 +24,7 @@ jobs:
       - name: download and Unzip SonarQube
         run: |
           wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.8.100196.zip
-          unzip sonarqube-9.9.8.10019.zip -d -d ${{ github.workspace }}/sonarqube
+          unzip sonarqube-9.9.8.10019.zip -d ${{ github.workspace }}/sonarqube
 
       - name: Run SonarQube Version script
         working-directory: ${{ github.workspace }}/sonarqube/sonarqube-9.9.8.100196/bin/linux-x86-64
