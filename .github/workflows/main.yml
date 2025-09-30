@@ -24,8 +24,22 @@ jobs:
       - name: download and Unzip SonarQube
         run: |
           wget https://binaries.sonarsource.com/Distribution/sonarqube/sonarqube-9.9.8.100196.zip
-          unzip sonarqube-9.9.8.100196.zip - d   ${{ github.workspace }}/sonarqube
-      #     echo "$PWD/sonarqube-9.9.8.100196/bin/linux-x86-64" >> $GITHUB_PATH
+          unzip sonarqube-9.9.8.100196.zip
+          echo "$PWD/sonarqube-9.9.8.100196/bin/linux-x86-64" >> $GITHUB_PATH
+
+       # Download SonarScanner CLI - required for scanning/version check
+      - name: Download SonarScanner CLI
+        run: wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.8.0.2856-linux.zip -O sonar-scanner.zip
+
+      - name: Unzip SonarScanner CLI
+        run: unzip sonar-scanner.zip
+
+      # Add SonarScanner CLI to PATH for subsequent steps
+      - name: Add SonarScanner CLI to PATH
+        run: echo "$PWD/sonar-scanner-4.8.0.2856-linux/bin" >> $GITHUB_PATH
+
+      - name: Confirm SonarScanner Version
+        run: sonar-scanner -v
 
       # - name: Run SonarQube Version script
       #   run: ./sonar.sh --version
